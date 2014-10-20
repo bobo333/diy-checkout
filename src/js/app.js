@@ -53,7 +53,7 @@ define(function(require) {
       this.$modalBody = $modal.find('.Celery-Modal-body');
 
       // Currently does not take slug from data-celery
-      $(document.body).on('click', '[data-celery]', this.show);
+      $(document.body).on('click', '[data-celery-white-glove]', this.show);
       this.$el.on('click', '.Celery-ModalCloseButton', this.hide);
 
       $form.on('valid', this.createOrder);
@@ -72,8 +72,8 @@ define(function(require) {
 
     loadShop: function() {
       // TODO: Support passing slug
-      var el = $('[data-celery]').first();
-      var slug = el && $(el).data('celery') || '';
+      var el = $('[data-celery-white-glove]').first();
+      var slug = el && $(el).data('celery-white-glove') || '';
 
       if (slug) {
         celeryClient.config.slug = slug;
@@ -203,6 +203,7 @@ define(function(require) {
     },
 
     showConfirmation: function(data) {
+      console.log('done!')
       confirmation.render(data);
       this.hideHeader();
       this.$form.detach();

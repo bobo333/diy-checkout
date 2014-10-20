@@ -116,7 +116,11 @@ module.exports = function(grunt) {
     },
 
     connect: {
-      server: {}
+      server: {
+        options: {
+          port: 9999
+        }
+      }
     },
 
     watch: {
