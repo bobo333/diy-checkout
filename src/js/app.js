@@ -67,6 +67,8 @@ define(function(require) {
 
       this.initialized = true;
 
+      console.log('initialized white glove');
+
       return this;
     },
 
