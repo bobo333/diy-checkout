@@ -1,0 +1,23 @@
+{
+  "name": "suitcss-utils-display",
+  "version": "0.4.1",
+  "author": "Nicolas Gallagher",
+  "main": "lib/display.css",
+  "ignore": [
+    ".*",
+    "CHANGELOG.md",
+    "component.json",
+    "package.json",
+    "test"
+  ],
+  "homepage": "https://github.com/suitcss/utils-display",
+  "_release": "0.4.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.4.1",
+    "commit": "97215663d510ee75ce92222b4e8c66b344ed5682"
+  },
+  "_source": "git://github.com/suitcss/utils-display.git",
+  "_target": "~0.4.1",
+  "_originalSource": "suitcss/utils-display"
+}

@@ -1,0 +1,21 @@
+{
+  "name": "celery-js",
+  "version": "0.0.2",
+  "homepage": "https://github.com/airbrite/celery-js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "main": "src/index.js",
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "devDependencies": {
+    "jquery": "~2.1.1"
+  }
+}

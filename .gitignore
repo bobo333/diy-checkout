@@ -30,4 +30,4 @@ tmp
 src/css
 
 # Bower
-src/js/vendor
+# src/js/vendor

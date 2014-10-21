@@ -52,9 +52,14 @@ define(function(require) {
 
       this.$modalBody = $modal.find('.Celery-Modal-body');
 
-      // Currently does not take slug from data-celery
       $(document.body).on('click', '[data-celery]', this.show);
       this.$el.on('click', '.Celery-ModalCloseButton', this.hide);
+
+      // initialize celery client with slugs
+      var slugs = $('[data-celery]').map(function(idx, item) {
+        return $(item).data('celery');
+      });
+      celeryClient.initializeSlugs(slugs);
 
       $form.on('valid', this.createOrder);
       $form.on('change', 'select, [name=shipping_zip]',
@@ -63,32 +68,27 @@ define(function(require) {
 
       $form.find('select').change();
 
-      this.showShop();
-
       this.initialized = true;
 
       return this;
     },
 
-    loadShop: function() {
-      // TODO: Support passing slug
-      var el = $('[data-celery]').first();
-      var slug = el && $(el).data('celery') || '';
+    loadShop: function(slug) {
 
       if (slug) {
         celeryClient.config.slug = slug;
+      } else {
+        return false;
       }
 
       shop.fetch(this.updateOrderSummary);
     },
 
-    show: function() {
+    show: function(event) {
       var self = this;
 
-      // Load shop data if it wasn't loaded yet
-      if (!shop.data.user_id) {
-        this.loadShop();
-      }
+      var slug = $(event.target).data('celery');
+      this.loadShop(slug);
 
       $(document.body).append(this.children);
       this.showShop();
@@ -153,6 +153,10 @@ define(function(require) {
       $form.find('.Celery-OrderSummary-price--price').text(price);
       $form.find('.Celery-OrderSummary-price--shipping').text(shipping);
       $form.find('.Celery-OrderSummary-number--quantity').text(quantity);
+      
+      if (shopData && shopData.product && shopData.product.name) {
+        this.$el.find('.product-title').text(shopData.product.name);
+      }
     },
 
     createOrder: function() {
