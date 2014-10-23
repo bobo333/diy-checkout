@@ -175,8 +175,10 @@ define(function(require) {
     },
 
     onConfirmation: function(data) {
-      console.log('confirmed ' + data.line_items[0].quantity + ' items');
       // Runs on confirmation with order data
+      if (window.onCeleryConfirmation != undefined) {
+        window.onCeleryConfirmation(data);
+      }
     },
 
     handleError: function(err) {
