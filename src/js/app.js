@@ -52,7 +52,7 @@ define(function(require) {
 
       this.$modalBody = $modal.find('.Celery-Modal-body');
 
-      $(document.body).on('click', '[data-celery]', this.show);
+      $('[data-celery]').on('click', this.show);
       this.$el.on('click', '.Celery-ModalCloseButton', this.hide);
 
       // initialize celery client with slugs
@@ -96,6 +96,10 @@ define(function(require) {
       this.$overlay.removeClass('u-hidden');
       this.$el.removeClass('u-hidden');
 
+      if (window.onCeleryShow != undefined) {
+        window.onCeleryShow();
+      }
+
       // next tick
       setTimeout(function() {
         // is-hidden uses opacity/transform so the transition occurs
@@ -113,6 +117,10 @@ define(function(require) {
       // is-hidden uses opacity/transform so the transition occurs
       this.$overlay.addClass('is-hidden');
       this.$el.addClass('is-hidden');
+
+      if (window.onCeleryHide != undefined) {
+        window.onCeleryHide();
+      }
 
       setTimeout(function() {
         // Sets display after 300ms
