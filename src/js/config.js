@@ -7,7 +7,7 @@ define(function(require) {
     apiHost: '<%= ENV["CELERY_API"] %>',
     // slug: '53ebdd5e1fd9c90400553dab',
     features: {
-      taxes: false,
+      taxes: true,
       coupons: false
     }
   };

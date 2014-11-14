@@ -149,6 +149,7 @@ define(function(require) {
       var $form = this.$form;
 
       if (config.features.taxes && celeryClient.config.userId) {
+
         this.updateTaxes();
       }
 
@@ -228,9 +229,10 @@ define(function(require) {
       var countryCode = this._getCountry();
       var zip = this._getZip();
 
-      // Cache hit
-      if (this._taxes[countryCode + zip] !== undefined) {
-        var taxRate = this._taxes[countryCode + zip];
+      //Cache hit
+      if (this._taxes[shop.data.user_id + countryCode + zip] !== undefined) {
+
+        var taxRate = this._taxes[shop.data.user_id + countryCode + zip];
         var tax = taxRate * this._getSubtotal();
 
         tax = formatMoney(tax);
@@ -244,11 +246,12 @@ define(function(require) {
         shipping_country: countryCode,
         shipping_zip: zip
       }, $.proxy(function(err, data) {
+
         if (err || !data || !data.data || data.data.base === undefined) {
           return;
         }
 
-        this._taxes[countryCode + zip] = data.data.base;
+        this._taxes[shop.data.user_id + countryCode + zip] = data.data.base;
 
         this.updateTaxes();
       }, this));
