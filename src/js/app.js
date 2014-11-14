@@ -438,8 +438,8 @@ define(function(require) {
       var countryCode = this._getCountry();
       var zip = this._getZip();
 
-      if (this._taxes[countryCode + zip] !== undefined) {
-        var taxRate = this._taxes[countryCode + zip];
+      if (this._taxes[shop.data.user_id + countryCode + zip] !== undefined) {
+        var taxRate = this._taxes[shop.data.user_id + countryCode + zip];
         var taxes = taxRate * this._getSubtotal();
 
         return taxes;
