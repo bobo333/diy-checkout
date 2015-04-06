@@ -64,6 +64,10 @@ define(function(require) {
       $form.on('valid', this.createOrder);
       $form.on('change', 'select, [name=shipping_zip]',
         this.updateOrderSummary);
+      $form.on('change', 'select, [name=variant]',
+        this.updateSku.bind(this));
+      $form.on('change', 'input[type=checkbox][name=white_glove]',
+        this.updateSku.bind(this));
       $form.on('keyup', '[name=coupon]', debounce(this.updateDiscount, 500));
 
       $form.find('select').change();
@@ -84,10 +88,68 @@ define(function(require) {
       shop.fetch(this.updateOrderSummary);
     },
 
+    updateSku: function() {
+      select_element = $('select[name=variant]')[0];
+      prod_name = select_element.selectedOptions[0].value;
+
+      checkbox_element = $('input[type=checkbox][name=white_glove]')[0];
+      white_glove = checkbox_element.checked;
+
+      skus = {
+        black: {
+          white_glove: '5522e325f34ce21000e9c07d',
+          basic: '5522e38df34ce21000e9c07f'
+        },
+        white: {
+          white_glove: '5522e300f34ce21000e9c07c',
+          basic: '5522e39cf34ce21000e9c080'
+        },
+        maple: {
+          white_glove: '54591ed6415f7a050002a913',
+          basic: '5432ce0ec43d0c0600af74b3'
+        }
+      }
+
+      prod_skus = skus[prod_name];
+
+      if (white_glove) {
+        sku = prod_skus['white_glove'];
+      } else {
+        sku = prod_skus['basic'];
+      }
+
+      this.loadShop(sku);
+    },
+
     show: function(event) {
       var self = this;
 
       var slug = $(event.target).data('celery');
+      this.loadShop(slug);
+
+      $(document.body).append(this.children);
+      this.showShop();
+      // Sets display
+      this.$overlay.removeClass('u-hidden');
+      this.$el.removeClass('u-hidden');
+
+      if (window.onCeleryShow != undefined) {
+        window.onCeleryShow();
+        this.updateSku();
+      }
+
+      // next tick
+      setTimeout(function() {
+        // is-hidden uses opacity/transform so the transition occurs
+        self.$overlay.removeClass('is-hidden');
+        self.$el.removeClass('is-hidden');
+      }, 0);
+      return this;
+    },
+
+    show_with_slug: function(slug) {
+      var self = this;
+
       this.loadShop(slug);
 
       $(document.body).append(this.children);
@@ -163,9 +225,10 @@ define(function(require) {
       $form.find('.Celery-OrderSummary-price--shipping').text(shipping);
       $form.find('.Celery-OrderSummary-number--quantity').text(quantity);
       
-      if (shopData && shopData.product && shopData.product.name) {
-        this.$el.find('.product-title').text(shopData.product.name);
-      }
+      // Update Title of Product
+      // if (shopData && shopData.product && shopData.product.name) {
+      //   this.$el.find('.product-title').text(shopData.product.name);
+      // }
     },
 
     createOrder: function() {
