@@ -1,50 +1,64 @@
 <form class="Celery-Form" novalidate>
   <div class="Celery-Form-body">
 
-    <div class="Celery-FormSection Celery-FormSection--inline">
-      <div class="Celery-FormSection-header">
-        <h2 class="Celery-FormSection-heading">
-          Quantity
-        </h2>
+    <div class="Celery-FormSection Celery-FormSection">
+      <div class="Celery-FormSection Celery-FormSection--inline">
+        <div class="Celery-FormSection-header">
+          <h2 class="Celery-FormSection-heading">
+            Quantity
+          </h2>
+        </div>
+
+        <div class="Celery-FormSection-body">
+          <div class="Celery-Form-group Celery-Form-group--quantity">
+            <div class="Celery-Select">
+              <!-- Edit these options to set your quantity choices -->
+              <select class="Celery-Select-select" name="quantity">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="Celery-FormSection-body">
-        <div class="Celery-Form-group Celery-Form-group--quantity">
-          <div class="Celery-Select">
-            <!-- Edit these options to set your quantity choices -->
-            <select class="Celery-Select-select" name="quantity">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-            </select>
-          </div>
+      <div class="Celery-FormSection Celery-FormSection--inline">
+
+        <div class="Celery-FormSection-header">
+          <h2 class="Celery-FormSection-heading">
+            Color
+          </h2>
         </div>
 
-        <div class="Celery-Form-group Celery-Form-group--variant">
-          <div class="Celery-Select">
-            <!-- Edit these options to set your variant choices -->
-            <select class="Celery-Select-select" name="variant">
-              <option value="black">black</option>
-              <option value="white">white</option>
-              <option value="maple">maple</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="Celery-Form-group Celery-Form-group--white-glove">
-          <div class="Celery-Checkbox">
-            <input type="checkbox" name="white_glove" value="white_glove" checked>
+        <div class="Celery-FormSection-body">
+          <div class="Celery-Form-group Celery-Form-group--variant">
+            <div class="Celery-Select">
+              <!-- Edit these options to set your variant choices -->
+              <select class="Celery-Select-select" name="variant">
+                <option value="black">black</option>
+                <option value="white">white</option>
+                <option value="maple">maple</option>
+              </select>
+            </div>
           </div>
         </div>
 
       </div>
+
+      <div class="Celery-Form-group Celery-Form-group--white-glove">
+        <div class="Celery-Checkbox">
+          <input type="checkbox" name="white_glove" id="white-glove-delivery-checkbox" value="white_glove" checked><label id="white-glove-delivery-checkbox-label" for="white-glove-delivery-checkbox">White Glove Delivery</label>
+        </div>
+      </div>
+
     </div>
 
     <div class="Celery-FormSection {{^features.taxes}}Celery-FormSection--inline{{/features.taxes}}">

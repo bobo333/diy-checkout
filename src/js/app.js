@@ -56,10 +56,8 @@ define(function(require) {
       this.$el.on('click', '.Celery-ModalCloseButton', this.hide);
 
       // initialize celery client with slugs
-      var slugs = $('[data-celery]').map(function(idx, item) {
-        return $(item).data('celery');
-      });
-      celeryClient.initializeSlugs(slugs);
+      this._initSkus()
+      celeryClient.initializeSlugs(this._getSkuList());
 
       $form.on('valid', this.createOrder);
       $form.on('change', 'select, [name=shipping_zip]',
@@ -99,22 +97,7 @@ define(function(require) {
       checkbox_element = $('input[type=checkbox][name=white_glove]')[0];
       white_glove = checkbox_element.checked;
 
-      skus = {
-        black: {
-          white_glove: '<%= ENV["CELERY_BLACK_WHITE_GLOVE_SKU"] %>',
-          basic: '<%= ENV["CELERY_BLACK_BASIC_SKU"] %>'
-        },
-        white: {
-          white_glove: '<%= ENV["CELERY_WHITE_WHITE_GLOVE_SKU"] %>',
-          basic: '<%= ENV["CELERY_WHITE_BASIC_SKU"] %>'
-        },
-        maple: {
-          white_glove: '<%= ENV["CELERY_MAPLE_WHITE_GLOVE_SKU"] %>',
-          basic: '<%= ENV["CELERY_MAPLE_BASIC_SKU"] %>'
-        }
-      }
-
-      prod_skus = skus[prod_name];
+      prod_skus = this.skus[prod_name];
 
       if (white_glove) {
         sku = prod_skus['white_glove'];
@@ -122,16 +105,11 @@ define(function(require) {
         sku = prod_skus['basic'];
       }
 
-      console.log(sku);
-
       this.loadShop(sku);
     },
 
     show: function(event) {
       var self = this;
-
-      var slug = $(event.target).data('celery');
-      this.loadShop(slug);
 
       $(document.body).append(this.children);
       this.showShop();
@@ -139,9 +117,11 @@ define(function(require) {
       this.$overlay.removeClass('u-hidden');
       this.$el.removeClass('u-hidden');
 
+      // get product data
+      this.updateSku();
+
       if (window.onCeleryShow != undefined) {
         window.onCeleryShow();
-        this.updateSku();
       }
 
       // next tick
@@ -460,6 +440,18 @@ define(function(require) {
       return shop.data.product && shop.data.product.price;
     },
 
+    _getSkuList: function() {
+      var skus_list = [
+        '<%= ENV["CELERY_BLACK_WHITE_GLOVE_SKU"] %>',
+        '<%= ENV["CELERY_BLACK_BASIC_SKU"] %>',
+        '<%= ENV["CELERY_WHITE_WHITE_GLOVE_SKU"] %>',
+        '<%= ENV["CELERY_WHITE_BASIC_SKU"] %>',
+        '<%= ENV["CELERY_MAPLE_WHITE_GLOVE_SKU"] %>',
+        '<%= ENV["CELERY_MAPLE_BASIC_SKU"] %>'
+      ];
+      return skus_list;
+    },
+
     _getSubtotal: function() {
       return this._getPrice() * this._getQuantity();
     },
@@ -525,6 +517,23 @@ define(function(require) {
       var taxes = this._getTaxes();
 
       return (quantity * price) + shipping + taxes - discount;
+    },
+
+    _initSkus:function() {
+      this.skus = {
+        black: {
+          white_glove: '<%= ENV["CELERY_BLACK_WHITE_GLOVE_SKU"] %>',
+          basic: '<%= ENV["CELERY_BLACK_BASIC_SKU"] %>'
+        },
+        white: {
+          white_glove: '<%= ENV["CELERY_WHITE_WHITE_GLOVE_SKU"] %>',
+          basic: '<%= ENV["CELERY_WHITE_BASIC_SKU"] %>'
+        },
+        maple: {
+          white_glove: '<%= ENV["CELERY_MAPLE_WHITE_GLOVE_SKU"] %>',
+          basic: '<%= ENV["CELERY_MAPLE_BASIC_SKU"] %>'
+        }
+      };
     }
   };
 });
