@@ -89,6 +89,10 @@ define(function(require) {
     },
 
     updateSku: function() {
+      if (!this.initialized) {
+        return;
+      }
+
       select_element = $('select[name=variant]')[0];
       prod_name = select_element.selectedOptions[0].value;
 
@@ -97,16 +101,16 @@ define(function(require) {
 
       skus = {
         black: {
-          white_glove: '5522e325f34ce21000e9c07d',
-          basic: '5522e38df34ce21000e9c07f'
+          white_glove: '<%= ENV["CELERY_BLACK_WHITE_GLOVE_SKU"] %>',
+          basic: '<%= ENV["CELERY_BLACK_BASIC_SKU"] %>'
         },
         white: {
-          white_glove: '5522e300f34ce21000e9c07c',
-          basic: '5522e39cf34ce21000e9c080'
+          white_glove: '<%= ENV["CELERY_WHITE_WHITE_GLOVE_SKU"] %>',
+          basic: '<%= ENV["CELERY_WHITE_BASIC_SKU"] %>'
         },
         maple: {
-          white_glove: '54591ed6415f7a050002a913',
-          basic: '5432ce0ec43d0c0600af74b3'
+          white_glove: '<%= ENV["CELERY_MAPLE_WHITE_GLOVE_SKU"] %>',
+          basic: '<%= ENV["CELERY_MAPLE_BASIC_SKU"] %>'
         }
       }
 
@@ -117,6 +121,8 @@ define(function(require) {
       } else {
         sku = prod_skus['basic'];
       }
+
+      console.log(sku);
 
       this.loadShop(sku);
     },
