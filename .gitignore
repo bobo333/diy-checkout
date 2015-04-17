@@ -31,3 +31,5 @@ src/css
 
 # Bower
 # src/js/vendor
+
+build_and_copy
