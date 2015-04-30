@@ -9,10 +9,11 @@
 @order-confirmation-max-width: 300px;
 
 .Celery-OrderConfirmation {
-  padding-top: @order-confirmation-padding;
+  padding: @order-confirmation-padding;
   background-color: @green;
   color: @white;
   text-align: center;
+  border-radius: @border-radius-large;
 }
 
 .Celery-OrderConfirmation-header {
@@ -33,7 +34,8 @@
 
 .Celery-OrderConfirmation-body {
   max-width: @order-confirmation-max-width;
-  margin: 0 auto @order-confirmation-padding;
+  margin: 0 auto;
+  padding-bototm: @order-confirmation-padding;
 }
 
 .Celery-OrderConfirmation-footer {
