@@ -8,7 +8,7 @@ define(function(require) {
     // slug: '53ebdd5e1fd9c90400553dab',
     features: {
       taxes: true,
-      coupons: false
+      coupons: true
     }
   };
 });

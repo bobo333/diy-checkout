@@ -1,7 +1,7 @@
 <form class="Celery-Form u-overflow-visible" novalidate>
   <div class="Celery-Form-body u-overflow-visible">
 
-    <div class="Celery-FormSection Celery-FormSection u-overflow-visible">
+    <div class="Celery-FormSection Celery-FormSection">
       <div class="Celery-FormSection Celery-FormSection--inline">
         <div class="Celery-FormSection-header">
           <h2 class="Celery-FormSection-heading">
@@ -53,46 +53,67 @@
 
       </div>
 
-      <div class="Celery-Form-group Celery-Form-group--white-glove u-overflow-visible">
-        <div class="Celery-Checkbox">
-          <input type="checkbox" name="white_glove" id="white-glove-delivery-checkbox" value="white_glove" checked><label id="white-glove-delivery-checkbox-label" for="white-glove-delivery-checkbox">White Glove Delivery</label>
-          <div class="tooltip-item">
-            <span class="what-is-this">What's this?</span> 
-            <div class="tooltip">We provide a white glove delivery service to make sure your Frame is installed perfectly. One of our delivery team will deliver, wall-mount or fit the Frame for you.</div>
-          </div>
-        </div>
-      </div>
-
     </div>
 
-    <div class="Celery-FormSection {{^features.taxes}}Celery-FormSection--inline{{/features.taxes}}">
+    <div class="Celery-FormSection {{^features.taxes}}Celery-FormSection--inline{{/features.taxes}}  u-overflow-visible">
       <div class="Celery-FormSection-header">
         <h2 class="Celery-FormSection-heading">
           Shipping
         </h2>
       </div>
 
-      <div class="Celery-FormSection-body">
-        <div class="Celery-Form-group Celery-Form-group--country {{#features.taxes}}Celery-Form-group--inline{{/features.taxes}}">
-          <div class="Celery-Select">
-            <!-- Edit these options for the countries you wish to ship to -->
-            <!-- "zz" is Unknown/TBD -->
-            <select class="Celery-Select-select" name="country" disabled="true">
-              <option value="us">US only for now</option>
-            </select>
+
+      <div class="Celery-FormSection-body u-overflow-visible">
+
+        <div class="Celery-FormSection Celery-FormSection--inline">
+
+          <div class="Celery-FormSection--body">
+
+            <div class="Celery-Form-group Celery-Form-group--country">
+              <div class="Celery-Select">
+                <!-- Edit these options for the countries you wish to ship to -->
+                <!-- "zz" is Unknown/TBD -->
+                <select class="Celery-Select-select" name="country" disabled="true">
+                  <option value="us">US only for now</option>
+                </select>
+              </div>
+            </div>
+
           </div>
+
         </div>
 
         {{#features.taxes}}
-          <div class="Celery-Form-group Celery-Form-group--inline">
-            <input class="Celery-TextInput Celery-TextInput--zip"
-              type="text"
-              name="shipping_zip"
-              pattern="[\w \d-]*"
-              placeholder="Zip Code"
-              data-celery-validate="required"/>
+
+          <div class="Celery-FormSection Celery-FormSection--inline">
+
+            <div class="Celery-FormSection--body">
+
+              <div class="Celery-Form-group">
+                <input class="Celery-TextInput Celery-TextInput--zip"
+                  type="text"
+                  name="shipping_zip"
+                  pattern="[\w \d-]*"
+                  placeholder="Zip Code"
+                  data-celery-validate="required"/>
+              </div>
+
+            </div>
+
           </div>
         {{/features.taxes}}
+
+        <div class="clear-floats"></div>
+
+        <div class="Celery-Form-group Celery-Form-group--white-glove u-overflow-visible">
+          <div class="Celery-Checkbox">
+            <input type="checkbox" name="white_glove" id="white-glove-delivery-checkbox" value="white_glove" checked><label id="white-glove-delivery-checkbox-label" for="white-glove-delivery-checkbox">White Glove Delivery</label>
+            <div class="tooltip-item">
+              <span class="what-is-this">What's this?</span> 
+              <div class="tooltip">We provide a white glove delivery service to make sure your Frame is installed perfectly. One of our delivery team will deliver, wall-mount or fit the Frame for you.</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -174,6 +195,8 @@
               type="text"
               name="coupon"
               placeholder="Type your code" />
+            <span class="Celery-Icon Celery-Icon--innerInput Celery-Icon--coupon">
+            </span>
           </div>
         </div>
       </div>

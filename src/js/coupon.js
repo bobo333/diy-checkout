@@ -11,8 +11,8 @@ define(function(require) {
       code = code.toLowerCase();
 
       // Cache hit
-      if (this.data[code] !== undefined) {
-        var coupon = this.data[code];
+      if (this.data[this._getCouponIdentifier(code)] !== undefined) {
+        var coupon = this.data[this._getCouponIdentifier(code)];
 
         // Invalid
         if (coupon === false) {
@@ -35,15 +35,25 @@ define(function(require) {
       }, $.proxy(function(err, data) {
         // Cache result
         if (err || !data || !data.data || data.data.code === undefined) {
-          this.data[code] = false;
+          this.data[this._getCouponIdentifier(code)] = false;
         } else {
-          this.data[code] = data.data;
+          this.data[this._getCouponIdentifier(code)] = data.data;
         }
 
         if (typeof cb === 'function') {
           cb.apply(this, arguments);
         }
       }, this));
+    },
+
+    getDiscount: function(code) {
+      if (this.data[this._getCouponIdentifier(code)] !== undefined) {
+        return this.data[this._getCouponIdentifier(code)];
+      }
+    },
+
+    _getCouponIdentifier: function(code) {
+      return celeryClient.config.userId + code;
     },
 
     data: {}

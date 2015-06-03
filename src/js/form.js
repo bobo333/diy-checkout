@@ -13,6 +13,7 @@ define(function(require) {
   var cvcIcon = require('text!templates/svg/cvc.svg');
   var dateIcon = require('text!templates/svg/date.svg');
   var emailIcon = require('text!templates/svg/email.svg');
+  var couponIcon = require('text!templates/svg/coupon.svg');
 
   return {
     initialize: function() {
@@ -48,6 +49,7 @@ define(function(require) {
       $el.find('.Celery-Icon--cvc').append($(cvcIcon));
       $el.find('.Celery-Icon--date').append($(dateIcon));
       $el.find('.Celery-Icon--email').append($(emailIcon));
+      $el.find('.Celery-Icon--coupon').append($(couponIcon));
     },
 
     initFormatting: function() {
@@ -98,7 +100,7 @@ define(function(require) {
       var $field = $('.Celery-TextInput--coupon');
 
       if (!$field.val()) {
-        valid = true;
+        valid = 'none';
       }
 
       this._setValidationClass($field, valid);
@@ -144,6 +146,12 @@ define(function(require) {
 
     _setValidationClass: function(el, isValid) {
       var $el = $(el);
+
+      if (isValid === 'none') {
+        $el.removeClass('is-valid is-invalid');
+        return;
+      }
+
       $el.toggleClass('is-invalid', !isValid);
       $el.toggleClass('is-valid', isValid);
     },

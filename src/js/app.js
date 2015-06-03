@@ -196,13 +196,12 @@ define(function(require) {
 
       var $form = this.$form;
 
-      if (config.features.taxes && celeryClient.config.userId) {
-
-        this.updateTaxes();
-      }
-
       if (config.features.coupons && celeryClient.config.userId) {
         this.updateDiscount();
+      }
+
+      if (config.features.taxes && celeryClient.config.userId) {
+        this.updateTaxes();
       }
 
       this.updateTotal();
@@ -317,12 +316,12 @@ define(function(require) {
       coupon.validate(code, $.proxy(function(valid) {
         var discount;
 
-        this.updateTotal();
-
         // TODO: Move coupon live validation to form
         form._setCouponValidationClass(valid);
 
         if (!valid || code === '') {
+          this.updateTaxes();
+          this.updateTotal();
           $(groupSelector).hide();
           return;
         }
@@ -331,6 +330,8 @@ define(function(require) {
         discount = formatMoney(this._getDiscount());
 
         $(priceSelector).text(discount);
+        this.updateTaxes();
+        this.updateTotal();
         $(groupSelector).show();
       }, this));
     },
@@ -403,7 +404,7 @@ define(function(require) {
     _getDiscount: function() {
       // TODO: Replace with coupon logic
       var code = this._getCouponCode();
-      var data = coupon.data[code];
+      var data = coupon.getDiscount(code);
 
       return data && data.amount || 0;
     },
@@ -453,7 +454,7 @@ define(function(require) {
     },
 
     _getSubtotal: function() {
-      return this._getPrice() * this._getQuantity();
+      return this._getPrice() * this._getQuantity() - this._getDiscount();
     },
 
     _getShipping: function() {
